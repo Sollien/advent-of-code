@@ -18,7 +18,18 @@ function validGames() {
 	return games.filter((str) => str !== '')
 }
 
-function sum() {
+function part2() {
+	const games = input.split("\n")
+	let sum = 0
+
+	for (let i = 0; i < games.length; i++) {
+		sum += (maxPerColor(games[i], "red") * maxPerColor(games[i], "green") * maxPerColor(games[i], "blue"))
+	}
+
+	return sum
+}
+
+function part1() {
 	const games = validGames()
 
 	let sum = 0
@@ -33,4 +44,5 @@ function sum() {
 	return sum
 }
 
-console.log(sum())
+console.log(part1())
+console.log(part2())
