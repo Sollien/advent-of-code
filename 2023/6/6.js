@@ -42,7 +42,7 @@ function partOne() {
 function partTwo() {
 	let joinTime = ""
 	let joinWinnerDistance = ""
-	const winnerDistances = []
+	let winnerDistances = 0
 
 	races.forEach(race => {
 		joinTime += race.time
@@ -56,11 +56,11 @@ function partTwo() {
 		const distance = (timeToInt - i) * i
 
 		if (distance > winnerDistanceToInt) {
-			winnerDistances.push(distance)
+			winnerDistances++
 		}
 	}
 
-	console.log(winnerDistances.length)
+	return console.log(winnerDistances)
 }
 
 partOne()
