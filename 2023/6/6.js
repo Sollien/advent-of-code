@@ -21,23 +21,47 @@ const races = [
 	}
 ]
 
-const winnerDistances = []
+function partOne() {
+	const winnerDistances = []
 
-races.forEach(race => {
-	for (let i = 0; i < race.time; i++) {
-		const distance = (race.time - i) * i
+	races.forEach(race => {
+		for (let i = 0; i < race.time; i++) {
+			const distance = (race.time - i) * i
 
-		if (distance > race.winnerDistance) {
-			race.newWinnerDistances.push(distance)
+			if (distance > race.winnerDistance) {
+				race.newWinnerDistances.push(distance)
+			}
 		}
 
-	}
+		winnerDistances.push(race.newWinnerDistances.length)
+	})
 
-	winnerDistances.push(race.newWinnerDistances.length)
-})
-
-function partOneAnswer() {
 	return console.log(winnerDistances.reduce((a, b) => a * b))
 }
 
-partOneAnswer()
+function partTwo() {
+	let joinTime = ""
+	let joinWinnerDistance = ""
+	const winnerDistances = []
+
+	races.forEach(race => {
+		joinTime += race.time
+		joinWinnerDistance += race.winnerDistance
+	})
+
+	const timeToInt = parseInt(joinTime, 10)
+	const winnerDistanceToInt = parseInt(joinWinnerDistance, 10)
+
+	for (let i = 0; i < timeToInt; i++) {
+		const distance = (timeToInt - i) * i
+
+		if (distance > winnerDistanceToInt) {
+			winnerDistances.push(distance)
+		}
+	}
+
+	console.log(winnerDistances.length)
+}
+
+partOne()
+partTwo()
