@@ -16,8 +16,21 @@ function partOne() {
 
     const sum = numbers.reduce((tot, num) => {
         const isEdgeLeft = num[1] % lineLength === 0
-        console.log(num[1] % lineLength)
+        const isEdgeRight = (num[1] + num[2]) % lineLength === 0
+        
+        let checkPositions = [
+            ...numberRange(num[1] - (!isEdgeLeft && 1) - lineLength, num[1] + num[2] - lineLength + (!isEdgeRight && 1)),
+            !isEdgeLeft && num[1] - 1,
+            !isEdgeRight && num[1] + num[2],
+            ...numberRange(num[1] - (!isEdgeLeft && 1) - lineLength, num[1] + num[2] - lineLength + (!isEdgeRight && 1)),
+        ]
+
+        checkPositions = checkPositions.filter((position) => position >= 0 && position < input.length)
+        const isPartNumber = checkPositions.some((position) => symbolPositions.includes(position))
+        return isPartNumber ? tot + parseInt(num[0]) : tot
     })
+
+    return console.log(sum)
 }
 
 partOne()
