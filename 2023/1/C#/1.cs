@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-string[] input = File.ReadAllLines("./../input.txt");
+
+string[] input = File.ReadAllLines("./../../../../input.txt");
 
 foreach (string line in input) {
-	input = line
-		.Replace("one", "o1e")
+    string replaceWordedNumbers = line.Replace("one", "o1e")
 		.Replace("two", "t2o")
 		.Replace("three", "t3e")
 		.Replace("four", "f4")
@@ -12,6 +12,8 @@ foreach (string line in input) {
 		.Replace("seven", "s7n")
 		.Replace("eight", "e8t")
 		.Replace("nine", "n9");
+    
+	Console.WriteLine(replaceWordedNumbers);
 }
 
-Console.WriteLine(input);
+Console.ReadLine();
