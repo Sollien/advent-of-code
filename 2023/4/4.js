@@ -1,8 +1,10 @@
 const fs = require('fs')
+const { type } = require('os')
 const input = fs.readFileSync("./input.txt", "utf-8")
 const lines = input.split("\n")
+
 let data = []
-let sum = 0
+let part1Sum = 0
 
 function parseData() {
 	lines.forEach(line => {
@@ -19,25 +21,27 @@ function parseData() {
 
 function sumWinnerNumbers() {
 	for (let i = 0; i < data.length; i++) {
-		const numberOfWinnerNumbers = []
-		const winnerNumbers = new Set(data[i].winnerNumbers)
-		const playerNumbers = new Set(data[i].playerNumbers)
+		let numberOfWinnerNumbers = []
+		const winnerNumbers = data[i].winnerNumbers
+		const playerNumbers = data[i].playerNumbers
 
-		const intersections = [...winnerNumbers].filter(number => playerNumbers.has(number))
+		const intersections = winnerNumbers.filter(number => playerNumbers.includes(number)).length
 
-		numberOfWinnerNumbers.push(intersections.length)
+		numberOfWinnerNumbers.push(intersections)
 
 		for (let j = 0; j < numberOfWinnerNumbers.length; j++) {
+			const cardToCopy = numberOfWinnerNumbers[j]
+
 			if (numberOfWinnerNumbers[j] === 0) {
-				sum += 0
+				part1Sum += 0
 			} else {
-				sum += Math.pow(2, numberOfWinnerNumbers[j] - 1)
+				part1Sum += Math.pow(2, numberOfWinnerNumbers[j] - 1)
 			}
 		}
 	}
+
+	return console.log(part1Sum)
 }
 
 parseData()
 sumWinnerNumbers()
-
-console.log(sum)
