@@ -1,3 +1,5 @@
+const { readLines, log, findNumbers, sum } = require("./../common")
+
 const fs = require('fs')
 const input = fs.readFileSync("./input.txt", 'utf-8')
 
@@ -18,18 +20,7 @@ function validGames() {
 	return games.filter((str) => str !== '')
 }
 
-function part2() {
-	const games = input.split("\n")
-	let sum = 0
-
-	for (let i = 0; i < games.length; i++) {
-		sum += (maxPerColor(games[i], "red") * maxPerColor(games[i], "green") * maxPerColor(games[i], "blue"))
-	}
-
-	return sum
-}
-
-function part1() {
+function partOne() {
 	const games = validGames()
 
 	let sum = 0
@@ -41,8 +32,19 @@ function part1() {
 		sum += id
 	}
 
-	return sum
+	return log(sum)
 }
 
-console.log(part1())
-console.log(part2())
+function partTwo() {
+	const games = input.split("\n")
+	let sum = 0
+
+	for (let i = 0; i < games.length; i++) {
+		sum += (maxPerColor(games[i], "red") * maxPerColor(games[i], "green") * maxPerColor(games[i], "blue"))
+	}
+
+	return log(sum)
+}
+
+partOne()
+partTwo()

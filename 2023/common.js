@@ -8,6 +8,10 @@ function findNumbers(stringValue) {
 	return stringValue.matchAll(/\d+/g)
 }
 
+function singleDigits(stringValue) {
+	return stringValue.match(/\d/g)
+}
+
 function sum(arr) {
 	return arr.reduce((x, y) => x + y, 0)
 }
@@ -16,5 +20,6 @@ module.exports = {
 	readLines,
 	findNumbers,
 	log: console.log,
-	sum
+	sum,
+	singleDigits
 }

@@ -1,5 +1,6 @@
-const fs = require('fs')
-let input = fs.readFileSync("./input.txt", "utf-8").split("\n")
+const { readLines, log, singleDigits, sum } = require("./../common")
+
+let input = readLines("./input.txt")
 
 input = input.map(line => line
 	.replace(/one/g, "o1e")
@@ -16,7 +17,7 @@ input = input.map(line => line
 const sumList = []
 
 for (let i = 0; i < input.length; i++) {
-	const numbersInString = input[i].match(/\d/g)
+	const numbersInString = singleDigits(input[i])
 
 	if (numbersInString) {
 		const stringToInt = numbersInString.map(match => parseInt(match, 10))
@@ -35,6 +36,4 @@ for (let i = 0; i < input.length; i++) {
 	}
 }
 
-const sum = sumList.reduce((accumulator, currentNumber) => accumulator + currentNumber, 0)
-
-console.log(sum)
+log(sum(sumList))
