@@ -1,36 +1,31 @@
-const fs = require('fs')
-let input = fs.readFileSync("./input.txt", "utf-8")
+const { readLines, log, findNumbers, sum } = require("./../common")
 
-function numberRange(start, end) {
-    return new Array(end - start).fill().map((d, i) => i + start)
+const input = readLines("./input.txt")
+
+const isAdjacentToSymbol = (input, x1, x2, row) => {
+	for (let y = row - 1; y <= row + 1; y++) {
+		for (let x = x1 - 1; x <= x2 + 1; x++) {
+			if (!input[y] || !input[y][x]) continue
+			const char = input[y][x]
+			if (char != '.' && !(char >= '0' && char <= '9')) return true
+		}
+	}
+
+	return false
 }
 
 function partOne() {
-    const lineLength = input.indexOf("\n") + 1
+	let adjacentNumbers = []
 
-    const symbolRegexp = /[^0-9.\n]/g
-    const symbolPositions = [...input.matchAll(symbolRegexp)].map(match => match.index)
+	input.flatMap((x, y) => {
+		const numbersFound = Array.from(findNumbers(x))
+		numbersFound.flatMap(match => {
+			const { 0: number, index: x } = match
+			adjacentNumbers.push(isAdjacentToSymbol(input, x, x + number.length - 1, y) ? parseInt(number) : 0)
+		})
+	})
 
-    const numbersRegexp = /[0-9]+/g
-    const numbers = [...input.matchAll(numbersRegexp)].map(match => [match[0], match.index, match[0].length])
-
-    const sum = numbers.reduce((tot, num) => {
-        const isEdgeLeft = num[1] % lineLength === 0
-        const isEdgeRight = (num[1] + num[2]) % lineLength === 0
-        
-        let checkPositions = [
-            ...numberRange(num[1] - (!isEdgeLeft && 1) - lineLength, num[1] + num[2] - lineLength + (!isEdgeRight && 1)),
-            !isEdgeLeft && num[1] - 1,
-            !isEdgeRight && num[1] + num[2],
-            ...numberRange(num[1] - (!isEdgeLeft && 1) - lineLength, num[1] + num[2] - lineLength + (!isEdgeRight && 1)),
-        ]
-
-        checkPositions = checkPositions.filter((position) => position >= 0 && position < input.length)
-        const isPartNumber = checkPositions.some((position) => symbolPositions.includes(position))
-        return isPartNumber ? tot + parseInt(num[0]) : tot
-    })
-
-    return console.log(sum)
+	log(sum(adjacentNumbers))
 }
 
 partOne()
