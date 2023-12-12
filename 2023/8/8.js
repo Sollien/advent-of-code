@@ -1,6 +1,6 @@
-const { readLines, log, sum } = require('../common')
+const { readLines, log, sum } = require("../common")
 
-const input = readLines('./input.txt')
+const input = readLines("./input.txt")
 const pattern = input[0].replace(/L/g, "0").replace(/R/g, "1").split("")
 const nodeArray = []
 
