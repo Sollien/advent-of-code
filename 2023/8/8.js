@@ -22,7 +22,7 @@ function partOne() {
 		for (const iteration of pattern) {
 			currentValue = nodeArray[currentValue][iteration];
 			counter++
-			if (currentValue == valueToFind) return log(counter)
+			if (currentValue === valueToFind) return log(counter)
 		}
 	}
 }
