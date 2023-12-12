@@ -1,41 +1,30 @@
 const { readLines, log, sum } = require('../common')
 
 const input = readLines('./input.txt')
-const pattern = input[0].replace(/\r/,"")
+const pattern = input[0].replace(/L/g, "0").replace(/R/g, "1").split("")
 const nodeArray = []
 
-input.shift()
+function partOne() {
+	let currentValue = "AAA"
+	let valueToFind = "ZZZ"
+	let counter = 0
 
-input.forEach(line => {
-    //Clean up the lines
-    line = line.replace(/["'()]/g,"").replace(/\r/,"").replaceAll(" ", "")
+	for (const line of input.slice(2)) {
+		const node = line.split(" = ")
+		nodeArray[node[0]] = JSON
+			.parse(node[1]
+			.replace("(", "[\"")
+			.replace(")", "\"]")
+			.replace(", ", "\", \""))
+	}
 
-    const lineSplit = line.split(/=|,/)
-    const node = {
-        name: lineSplit[0],
-        leftValue: lineSplit[1],
-        rightValue: lineSplit[2]
-    }
-
-    nodeArray.push(node)
-})
-
-nodeArray.shift()
-let currentMove = nodeArray.indexOf(nodeArray.find((node) => node.name === "AAA"))
-let valueToFind = "AAA"
-let counter = 0
-let index = 0
-
-while(valueToFind !== 'ZZZ') {
-    const char = pattern[index]
-    if (index === pattern.length) index = 0;
-    if (char === "L") {
-        valueToFind = nodeArray[currentMove].leftValue
-    } else if (char === "R") {
-        valueToFind = nodeArray[currentMove].rightValue
-    }
-    currentMove = nodeArray.indexOf(nodeArray.find((node) => node.name === valueToFind))
-    index++
-    counter++
-    if (valueToFind === "ZZZ") return log(counter)
+	while(currentValue !== valueToFind) {
+		for (const iteration of pattern) {
+			currentValue = nodeArray[currentValue][iteration];
+			counter++
+			if (currentValue == valueToFind) return log(counter)
+		}
+	}
 }
+
+partOne()
