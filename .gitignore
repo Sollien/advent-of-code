@@ -386,6 +386,7 @@ FodyWeavers.xsd
 
 # Local History for Visual Studio Code
 .history/
+.DS_store
 
 # Windows Installer files from build outputs
 *.cab
