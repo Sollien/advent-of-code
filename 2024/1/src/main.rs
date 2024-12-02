@@ -26,15 +26,32 @@ fn parse_input(left_column_values: &mut Vec<i32>, right_column_values: &mut Vec<
 	}
 }
 
-fn summarize_comparison(left_column_values: Vec<i32>, right_column_values: Vec<i32>) -> i32 {
+fn find_similarity(left_column_value: i32, right_column_values: Vec<i32>) -> i32 {
+	let mut total_occurences: i32 = 0;
+
+	for i in 0..right_column_values.len() {
+
+		if left_column_value == right_column_values[i] {
+			total_occurences += 1;
+		}
+	}
+
+	return left_column_value * total_occurences
+}
+
+fn summarize_comparison(left_column_values: Vec<i32>, right_column_values: Vec<i32>) -> [i32; 2] {
 	let mut total = 0;
+	let mut total_similarity = 0;
 
 	for i in 0..left_column_values.len() {
 		let distance = (left_column_values[i] - right_column_values[i]).abs();
 		total += distance;
+
+		let similarity = find_similarity(left_column_values[i], right_column_values.clone());
+		total_similarity += similarity;
 	}
 
-	return total
+	[total, total_similarity]
 }
 
 fn main() {
@@ -45,7 +62,8 @@ fn main() {
 	left_column_values.sort_unstable();
 	right_column_values.sort_unstable();
 
-	let total_distance = summarize_comparison(left_column_values, right_column_values);
+	let total_distance: [i32; 2] = summarize_comparison(left_column_values, right_column_values);
 
-	println!("{:?}", total_distance);
+	println!("Part 1: {:?}", total_distance[0]);
+	println!("Part 2: {:?}", total_distance[1]);
 }
