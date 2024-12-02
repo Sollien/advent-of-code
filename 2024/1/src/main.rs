@@ -1,6 +1,20 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+fn main() {
+	let mut left_column_values: Vec<i32> = Vec::new();
+	let mut right_column_values: Vec<i32> = Vec::new();
+
+	parse_input(&mut left_column_values, &mut right_column_values);
+	left_column_values.sort_unstable();
+	right_column_values.sort_unstable();
+
+	let total_distance: [i32; 2] = summarize_comparison(left_column_values, right_column_values);
+
+	println!("Part 1: {:?}", total_distance[0]);
+	println!("Part 2: {:?}", total_distance[1]);
+}
+
 fn parse_input(left_column_values: &mut Vec<i32>, right_column_values: &mut Vec<i32>) {
 	let file = File::open("src/input.txt")
 		.expect("Should have been able to open");
@@ -52,18 +66,4 @@ fn summarize_comparison(left_column_values: Vec<i32>, right_column_values: Vec<i
 	}
 
 	[total, total_similarity]
-}
-
-fn main() {
-	let mut left_column_values: Vec<i32> = Vec::new();
-	let mut right_column_values: Vec<i32> = Vec::new();
-
-	parse_input(&mut left_column_values, &mut right_column_values);
-	left_column_values.sort_unstable();
-	right_column_values.sort_unstable();
-
-	let total_distance: [i32; 2] = summarize_comparison(left_column_values, right_column_values);
-
-	println!("Part 1: {:?}", total_distance[0]);
-	println!("Part 2: {:?}", total_distance[1]);
 }
