@@ -1,8 +1,6 @@
 [package]
-name = "day_3"
+name = "day_4"
 version = "0.1.0"
 edition = "2021"
-regex = "1.5"
 
 [dependencies]
-regex = "1.11.1"
