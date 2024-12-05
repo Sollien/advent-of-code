@@ -68,7 +68,9 @@ impl TraversalPath {
 			let mut row = start_row;
 			let mut col = start_col;
 
-			while row < height && (step > 0 && col < width || step < 0 && col < width) {
+			while row < height &&
+            	((step > 0 && col < width) ||
+             	(step < 0 && col < width && col as i32 >= 0)) {
 				diagonal.push(self.lines[row][col]);
 				row += 1;
 				col = (col as i32 + step) as usize;
@@ -79,6 +81,7 @@ impl TraversalPath {
 			}
 		};
 
+		// Main diagonals (top-left to bottom-right)
 		for start_col in 0..width {
 			collect_diagonal(0, start_col, 1);
 		}
@@ -86,6 +89,7 @@ impl TraversalPath {
 			collect_diagonal(start_row, 0, 1);
 		}
 
+		// Anti-diagonals (top-right to bottom-left)
 		for start_col in 0..width {
 			collect_diagonal(0, start_col, -1);
 		}
@@ -119,9 +123,8 @@ fn main() {
 
 	for traversal in all_traversals.iter() {
 		let joined: String = traversal.iter().collect();
-		if joined.contains("XMAS") {
-			xmas_count += 1;
-		}
+		let xmas_instances = joined.matches("XMAS").count();
+		xmas_count += xmas_instances;
 	}
 
 	println!("1. Instances of XMAS: {:?} (incorrect)", xmas_count);
