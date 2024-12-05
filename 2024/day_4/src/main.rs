@@ -127,5 +127,5 @@ fn main() {
 		xmas_count += xmas_instances;
 	}
 
-	println!("1. Instances of XMAS: {:?} (incorrect)", xmas_count);
+	println!("1. Instances of XMAS: {:?}", xmas_count);
 }
